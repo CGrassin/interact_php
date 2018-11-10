@@ -51,7 +51,7 @@ function Interact_PHP($pageTitle=NULL){
         <div id="interactphp-alert" class="hidden" role="alert">Error sending form...</div>
 
         <label class="sr-only" for="interactphp-message">Comment</label>
-        <textarea id="interactphp-message" class="input" name="message" rows="3" required maxlength="1000" placeholder="Enter your comment..." onblur="recaptchaDisplay()"></textarea>
+        <textarea id="interactphp-message" class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="Enter your comment..." onblur="recaptchaDisplay()"></textarea>
 
         <div class="input-group">
           <div class="interactphp-nickname">
@@ -111,6 +111,7 @@ function AddComment($page,$name,$message) {
   }
 
   $commentElement = $xml->addChild('comment');
+  $commentElement->addAttribute('id',uniqid());
   $commentElement->addChild('date', time());
   $commentElement->addChild('name', htmlspecialchars($name));
   $commentElement->addChild('message', htmlspecialchars($message));
@@ -137,7 +138,7 @@ function DisplayComments($page) {
      $count++;
      echo '<li class="comment">';
      echo '<p class="comment-author"><span class="comment-rank">#'.$count.'</span> '.htmlspecialchars($comment->{"name"}).'</p>';
-     echo '<p class="comment-message">'.htmlspecialchars($comment->{"message"}).'</p>';
+     echo '<p class="comment-message">'.preg_replace("/\\\\n/","<br>",htmlspecialchars($comment->{"message"})).'</p>';
      echo '<p class="comment-date text-muted">on '.date("F j Y, G:i", intval($comment->{"date"})).'</p>';
      echo '</li>';
    }
