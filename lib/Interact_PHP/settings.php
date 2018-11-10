@@ -37,6 +37,9 @@
   
     /* String displayed when there is not any comment. */
     const NO_COMMENTS_MESSAGE = "No comments yet!";
+
+    /* Comment max allowed length. */
+    const MAX_COMMENT_LENGTH = 2000;
   
     /* Advanced feature: this function is called whenever a comment is sent.
     One typical usage is to notify yourself with a mail on each new comment.

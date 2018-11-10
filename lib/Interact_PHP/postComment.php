@@ -45,8 +45,8 @@ if(strlen($name)<=0 || strlen($name)>30){
     exit;
 }
 $message=preg_replace("/\r|\n/", " ", $_POST['message']);
-if(strlen($message)<=0 || strlen($message)>1000){
-    echo "Error: your comment must contain between 1 and 1000 characters.";
+if(strlen($message)<=0 || strlen($message)>Settings::MAX_COMMENT_LENGTH){
+    echo "Error: your comment must contain between 1 and ".Settings::MAX_COMMENT_LENGTH." characters.";
     exit;
 }
 $page=SanitizeFilename($_POST['page']);
