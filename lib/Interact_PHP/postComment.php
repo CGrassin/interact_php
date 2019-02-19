@@ -39,12 +39,12 @@ if(!isset($_POST['name']) || !isset($_POST['message']) || !isset($_POST['page'])
 }
 
 /* Check the validity of the input. */
-$name=strip_tags(preg_replace("/\r|\n/", " ", $_POST['name']));
+$name=preg_replace("/\r|\n/", " ", $_POST['name']);
 if(strlen($name)<=0 || strlen($name)>30){
     echo "Error: name must contain between 1 and 30 characters.";
     exit;
 }
-$message=strip_tags(preg_replace("/(\r|\n)+/", "\\n", $_POST['message']));
+$message=preg_replace("/(\r|\n)+/", "\\n", $_POST['message']);
 if(strlen($message)<=0 || strlen($message)>Settings::MAX_COMMENT_LENGTH){
     echo "Error: your comment must contain between 1 and ".Settings::MAX_COMMENT_LENGTH." characters.";
     exit;

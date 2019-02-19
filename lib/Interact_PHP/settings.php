@@ -15,7 +15,7 @@
     - modern.css
     - modern-dark.css
     - creative.css
-    You can add your custom stylesheet in the css folder. ss*/
+    You can add your custom stylesheet in the css folder. */
     const THEME_STYLESHEET = 'modern.css'; // default: 'modern.css'
 
     /* Absolute path of the folder containing ths comments.
@@ -45,9 +45,8 @@
     One typical usage is to notify yourself with a mail on each new comment.
     The conection to the user will be closed BEFORE this function is called; 
     this means that you can do lengthy computation here.
-    Warning: the parameters are the user's input. Don't thrust them, be on the safe side!*/
-    public static function CommentCallback($titleOfPage,$nameOfCommenter,$commentContent) {
-    }
+    Warning: the parameters are the user's input. Don't thrust it, be on the safe side!*/
+    public static function CommentCallback($titleOfPage,$nameOfCommenter,$commentContent) {}
 
     private function __construct() {}
   }

@@ -1,4 +1,7 @@
   /* Box styling */
+  .bg-light{
+    background-color: #303030!important;
+  }
   .comment-box {
     font: normal 13px;
     color: #eee;
