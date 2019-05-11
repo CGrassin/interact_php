@@ -21,7 +21,7 @@ article. You may want to set it juste to keep the folder clear;
 It will be taken from the url otherwise. */
 function Interact_PHP($pageTitle=NULL){
 
-  // If no title is provided, take it from the url (reoving the query string first)
+  // If no title is provided, take it from the url (removing the query string first)
   if (is_null($pageTitle)) {
     $pageTitle=strtok($_SERVER["REQUEST_URI"],'?');
   }
@@ -47,8 +47,8 @@ function Interact_PHP($pageTitle=NULL){
         <p class="text-muted text-center">Please enable javascript to comment.</p>
       </noscript>
 
-      <form class="comment-form" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment'; ?>" id="commentForm" onsubmit="return interactphpSubmit()">
-        <div id="interactphp-alert" class="hidden" role="alert">Error sending form...</div>
+      <form class="comment-form" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" id="commentForm" onsubmit="return interactphpSubmit()">
+        <div id="interactphp-alert" class="hidden" role="alert">Error sending comment...</div>
 
         <label class="sr-only" for="interactphp-message">Comment</label>
         <textarea id="interactphp-message" class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="Enter your comment..." onblur="recaptchaDisplay()"></textarea>
@@ -56,7 +56,7 @@ function Interact_PHP($pageTitle=NULL){
         <div class="input-group">
           <div class="interactphp-nickname">
             <label class="sr-only" for="interactphp-name">Nickname</label>
-            <input id="interactphp-name" class="input" type="text" name="name" placeholder="Nickname" maxlength="30" required onblur="recaptchaDisplay()">
+            <input id="interactphp-name" class="input" type="text" name="name" placeholder="Nickname" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onblur="recaptchaDisplay()">
           </div>
 
           <div class="interactphp-submit">
@@ -76,8 +76,8 @@ function Interact_PHP($pageTitle=NULL){
 
     <?php } ?>
 
-    <ul class="comment-list list-unstyled">
-      <?php DisplayComments($pageTitle); ?>
+    <ul class="comment-list">
+      <?php displayComments($pageTitle); ?>
     </ul>
   </div>
 </div>
@@ -85,14 +85,42 @@ function Interact_PHP($pageTitle=NULL){
 <?php
 }
 
+/* Displays the comments for $filename, if any exists. Displays
+a cutomizable 'no comments' message otherwise.
+SECURITY: if for some reason, $page where to be compromized, the
+attacker would NOT be able to see anything else than comments thank
+to the restriction of 'NameToCommentFile'.*/
+function displayComments($page=NULL) {
+  $filename = NameToCommentFile($page);
+  if (file_exists($filename)) {
+    $xml= simplexml_load_string(file_get_contents($filename));
+    $count=0;
+    foreach ($xml->children() as $comment) {
+     $count++;
+     echo '<li class="comment">';
+     echo '<p class="comment-author"><span class="comment-rank">#'.$count.'</span> '.htmlspecialchars($comment->{"name"});
+     if ($comment->attributes()['admin'] == "true") {
+       echo ' <span class="badge">'.Settings::ADMIN_BADGE.'</span>';
+     }
+     echo '</p>';
+     echo '<p class="comment-message">'.htmlspecialchars($comment->{"message"}).'</p>';
+     echo '<p class="comment-date text-muted">on '.date("F j Y, G:i", intval($comment->{"date"})).'</p>';
+     echo '</li>';
+   }
+ }
+ else {
+  echo '<li class="comment"><p>'.Settings::NO_COMMENTS_MESSAGE.'</p></li>';
+}
+}
+
 /* Adds a comment to the XML datafile $filename.
-SECURITY: In case the user hacked the form to enter a random/nasty 
+SECURITY: In case the user modified the form to enter a random/nasty 
 '$page', it will simply add a safely sanitized random file in the 
 'Commnents' directory, preventing any harm to be done even if the 
 whole filesystem is in 777.
 SECURITY 2: htmlspecialchars is used to prevent breaking the XML structure
 with nasty input. */
-function AddComment($page,$name,$message) {
+function addComment($page,$name,$message,$isAdmin=FALSE) {
   try
   {
     $filename = NameToCommentFile($page);
@@ -110,13 +138,16 @@ function AddComment($page,$name,$message) {
     $xml = simplexml_load_string('<?xml version="1.0" encoding="UTF-8"?><comments></comments>');
   }
 
-  $commentElement = $xml->addChild('comment');
-  $commentElement->addAttribute('id',uniqid());
-  $commentElement->addChild('date', time());
-  $commentElement->addChild('name', htmlspecialchars($name));
-  $commentElement->addChild('message', htmlspecialchars($message));
+  $comment = $xml->addChild('comment');
+  $comment->addAttribute('id',uniqid());
+  if ($isAdmin === TRUE) {
+    $comment->addAttribute('admin','true');
+  }
+  $comment->addChild('date', time());
+  $comment->addChild('name', htmlspecialchars($name));
+  $comment->addChild('message', htmlspecialchars($message));
   if (Settings::ENABLE_SAVE_COMMENTER_IP) {
-    $commentElement->addChild('ip', $_SERVER['REMOTE_ADDR']);
+    $comment->addChild('ip', htmlspecialchars($_SERVER['REMOTE_ADDR']));
   }
   $xml->asXML($filename);
   return true;
@@ -124,28 +155,38 @@ function AddComment($page,$name,$message) {
 return false;
 }
 
-/* Displays the comments for $filename, if any exists. Displays
-a cutomizable 'no comments' message otherwise.
-SECURITY: if for some reason, $page where to be compromized, the
-attacker would NOT be able to see anything else than comments thank
-to the restriction of 'NameToCommentFile'.*/
-function DisplayComments($page) {
-  $filename = NameToCommentFile($page);
+/* Deletes a comment from a XML file */
+function deleteComment($filename,$id) {
+  if (file_exists($filename)) {
+    $xml = simplexml_load_string(file_get_contents($filename));
+    unset($xml->xpath("//comments/comment[@id='" . $id . "']")[0][0]);
+    $xml->asXML($filename);
+    return true;
+  }
+  return false;
+}
+
+/* Promote comment as admin (displays badge next to comment) */
+function setAdmin($filename,$id,$isAdmin) {
   if (file_exists($filename)) {
     $xml= simplexml_load_string(file_get_contents($filename));
-    $count=0;
     foreach ($xml->children() as $comment) {
-     $count++;
-     echo '<li class="comment">';
-     echo '<p class="comment-author"><span class="comment-rank">#'.$count.'</span> '.htmlspecialchars($comment->{"name"}).'</p>';
-     echo '<p class="comment-message">'.preg_replace("/\\\\n/","<br>",htmlspecialchars($comment->{"message"})).'</p>';
-     echo '<p class="comment-date text-muted">on '.date("F j Y, G:i", intval($comment->{"date"})).'</p>';
-     echo '</li>';
-   }
- }
- else {
-  echo '<li class="comment"><p>'.Settings::NO_COMMENTS_MESSAGE.'</p></li>';
-}
+      if ($comment->attributes()['id'] == $id) {
+
+        if(!isset($comment->attributes()['admin']))
+          $comment->addAttribute('admin','false');
+
+        if ($isAdmin === true)
+          $comment->attributes()['admin'] = 'true';
+        else
+          $comment->attributes()['admin'] = 'false';
+
+        $xml->asXML($filename);
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 /* Sanitizes string to be used as a filename. It takes no chances, and

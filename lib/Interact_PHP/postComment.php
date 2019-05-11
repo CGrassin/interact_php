@@ -40,11 +40,11 @@ if(!isset($_POST['name']) || !isset($_POST['message']) || !isset($_POST['page'])
 
 /* Check the validity of the input. */
 $name=preg_replace("/\r|\n/", " ", $_POST['name']);
-if(strlen($name)<=0 || strlen($name)>30){
-    echo "Error: name must contain between 1 and 30 characters.";
+if(strlen($name)<=0 || strlen($name)>Settings::MAX_USERNAME_LENGTH){
+    echo "Error: name must contain between 1 and ".Settings::MAX_USERNAME_LENGTH." characters.";
     exit;
 }
-$message=preg_replace("/(\r|\n)+/", "\\n", $_POST['message']);
+$message=preg_replace("/(\r|\n)+/", "<br>", $_POST['message']);
 if(strlen($message)<=0 || strlen($message)>Settings::MAX_COMMENT_LENGTH){
     echo "Error: your comment must contain between 1 and ".Settings::MAX_COMMENT_LENGTH." characters.";
     exit;
@@ -60,7 +60,7 @@ ignore_user_abort(true);
 set_time_limit(0);
 ob_start();
 
-if(AddComment($page,$name,$message)){
+if(addComment($page,$name,$message,false)){
     echo "ok";
 }else{
     echo "System error... please try again later.";

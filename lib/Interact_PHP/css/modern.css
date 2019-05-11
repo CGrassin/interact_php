@@ -1,4 +1,9 @@
   /* Box styling */
+      .comment-box *{
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
   .comment-box {
     font: normal 13px;
     color: #222222;
@@ -63,6 +68,7 @@
     transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    color: inherit;
   }
   .comment-box textarea {
     resize: none;
@@ -108,10 +114,6 @@
     display: table;
     content: " ";
   }
-  .interactphp-submit {
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-  }
   @media (min-width: 768px){
     .interactphp-nickname {
       width: 65%;    
@@ -125,6 +127,10 @@
   }
 
   /* Comment list : */
+  .comment-box .comment-list {
+    padding-left: 0;
+    list-style: none;
+  }
   .comment-box .comment{
     border-top:1px solid #ddd;
     text-align: left;
@@ -133,6 +139,22 @@
   }
   .comment-box .comment-author {
     font-weight: bold;
+  }
+  .comment-box .comment-author.comment-admin {
+  }
+  .comment-box .comment-author .badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #428bca;
+    border-radius: 10px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
   }
   .comment-box .comment-message {
     margin-bottom: 3px;
@@ -186,10 +208,6 @@
     overflow: hidden;
     clip: rect(0,0,0,0);
     border: 0;
-  }
-  .comment-box .list-unstyled {
-    padding-left: 0;
-    list-style: none;
   }
   .comment-box .hidden{
     display: none!important;
