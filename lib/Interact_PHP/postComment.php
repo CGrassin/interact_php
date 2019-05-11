@@ -44,7 +44,7 @@ if(strlen($name)<=0 || strlen($name)>Settings::MAX_USERNAME_LENGTH){
     echo "Error: name must contain between 1 and ".Settings::MAX_USERNAME_LENGTH." characters.";
     exit;
 }
-$message=preg_replace("/(\r|\n)+/", "<br>", $_POST['message']);
+$message=preg_replace("/(\r|\n)+/", "\\n", $_POST['message']);
 if(strlen($message)<=0 || strlen($message)>Settings::MAX_COMMENT_LENGTH){
     echo "Error: your comment must contain between 1 and ".Settings::MAX_COMMENT_LENGTH." characters.";
     exit;

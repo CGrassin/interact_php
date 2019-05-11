@@ -103,7 +103,7 @@ function displayComments($page=NULL) {
        echo ' <span class="badge">'.Settings::ADMIN_BADGE.'</span>';
      }
      echo '</p>';
-     echo '<p class="comment-message">'.htmlspecialchars($comment->{"message"}).'</p>';
+     echo '<p class="comment-message">'.preg_replace("/\\\\n/","<br>",htmlspecialchars($comment->{"message"})).'</p>';
      echo '<p class="comment-date text-muted">on '.date("F j Y, G:i", intval($comment->{"date"})).'</p>';
      echo '</li>';
    }
