@@ -57,6 +57,8 @@ The path of the library relative to the root of your website is probably incorre
 
 You need to make sure that your reCAPTACHA public and secret keys are correct. Interact uses reCAPTCHA v2. More info at https://developers.google.com/recaptcha/docs/display
 
-## Future features for Interact PHP v2
+## Future features
 
-* A simple admin interface to manage comments
+* A simple admin interface to manage comments (*Work In Progress*)
+* A tag to identify the admin (*Work In Progress*)
+* Basic inline markdown syntax support (**bold**, *italics* and `inline code`)
