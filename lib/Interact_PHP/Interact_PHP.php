@@ -103,7 +103,7 @@ function displayComments($page=NULL) {
        echo ' <span class="badge">'.Settings::ADMIN_BADGE.'</span>';
      }
      echo '</p>';
-     echo '<p class="comment-message">'.preg_replace("/\\\\n/","<br>",htmlspecialchars($comment->{"message"})).'</p>';
+     echo '<p class="comment-message">'.parseMarkdown(preg_replace("/\\\\n/","<br>",htmlspecialchars($comment->{"message"}))).'</p>';
      echo '<p class="comment-date text-muted">on '.date("F j Y, G:i", intval($comment->{"date"})).'</p>';
      echo '</li>';
    }
@@ -188,6 +188,22 @@ function setAdmin($filename,$id,$isAdmin) {
   }
   return false;
 }
+
+/* Parse Markdown in comments.
+Inspired by https://gist.github.com/jbroadway/2836900 */
+function parseMarkdown($string){
+  $rules = array (
+    '/(\*\*|__)(.*?)\1/' => '<b>\2</b>',            // bold
+    '/(\*|_)(.*?)\1/' => '<i>\2</i>',               // emphasis
+    '/\~\~(.*?)\~\~/' => '<del>\1</del>',           // del
+    '/`(.*?)`/' => '<code>\1</code>'                // inline code
+  );
+  foreach ($rules as $regex => $replacement) {
+    $string = preg_replace ($regex, $replacement, $string);
+  }
+  return trim ($string);
+}
+
 
 /* Sanitizes string to be used as a filename. It takes no chances, and
 works on any filesystem. */
