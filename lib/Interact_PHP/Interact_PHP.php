@@ -60,7 +60,7 @@ function Interact_PHP($pageTitle=NULL){
           </div>
 
           <div class="interactphp-submit">
-            <button class="input" type="submit"><span class="fa fa-comment"></span> Submit</button>
+            <button class="input" type="submit"><?php echo Settings::COMMENT_BUTTON; ?></button>
           </div>
         </div>
 

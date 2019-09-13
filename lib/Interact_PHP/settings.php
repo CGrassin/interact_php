@@ -34,8 +34,11 @@
 
     /* Title of the comment area (HTML). */
     const TITLE_COMMENT_BOX = "What is on your mind?";
+
+    /* Comment submit comment button text. */
+    const COMMENT_BUTTON = "Comment";
   
-    /* HTML String displayed when there is not any comment. */
+    /* String displayed when there is not any comment (HTML). */
     const NO_COMMENTS_MESSAGE = "No comments yet!";
 
     /* Comment max allowed length. */
@@ -44,7 +47,7 @@
     const MAX_USERNAME_LENGTH = 30; // default: 30
 
 
-    /* Admin page: */
+    /* Admin page (NOT IMPLEMENTED YET) */
     /* Admin name, used as login and in comments. */
     const ADMIN_LOGIN = NULL; // default: NULL (disabled)
     /* SHA256 of the admin password. To find the SHA256 on Linux,
