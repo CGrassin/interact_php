@@ -16,7 +16,7 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 * Anti-Spam system using Google's reCAPTCHA v2 (optional).
 * Pure JS (no JQuery required).
 * Secure by design.
-* **New**: Inline markdown syntax support in comments (**bold**, *italics*, ~~strikethrough~~ and `inline code`)
+* **New**: Inline markdown syntax support in comments (**bold**, *italics*, ~~strikethrough~~ and `inline code`) (can be disabled)
 
 ## Installation and setup
 
