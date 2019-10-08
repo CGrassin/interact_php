@@ -26,7 +26,7 @@
     /* Option to temporaly disable the comments on all of your website.
     You can set a custom HTML warning for yours users. */
     const DISABLE_COMMENTS = false; // default: false
-    const DISABLE_COMMENTS_MESSAGE = "Sorry, comments are temporarly disabled.";
+    const DISABLE_COMMENTS_MESSAGE = "Sorry, comments are temporarily disabled.";
   
     /* If enabled, saves the commenters IP along with their comment in
     the xml files.  */
@@ -45,6 +45,9 @@
     const MAX_COMMENT_LENGTH = 2000; // default: 2000
     /* Username max allowed length. */
     const MAX_USERNAME_LENGTH = 30; // default: 30
+
+    /* Enable/disable Markdown syntax in comments. */
+    const ENABLE_MARKDOWN_SYNTAX = true; // default: true
 
 
     /* Admin page (NOT IMPLEMENTED YET) */
