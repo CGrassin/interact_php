@@ -4,7 +4,7 @@
 
 Interact is a simple PHP open-source comment system that can be added to any website in minutes to improve interactivity and user's involvement. Client-side, it is very lightweight (<6KB CSS and JS combined) and intuitive (no logins, no cookies,...). Server-side, it is very easy to setup, manage and even customize to fit your needs.
 
-![Interact PHP with the modern interface](http://charleslabs.fr/projects/20180817_Interact_PHP/modern.png)
+![Interact PHP with the modern interface](sample/modern.png)
 
 Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), Interact does not use an SQL database but stores comments as XML files. Many third-party comment systems like Disqus, IntenseDebate, Livefyre, Facebook Comments and Google+ Comments, suffer from these problems and impose them and many restrictions onto their users, meaning you and your website's visitors.
 
@@ -39,7 +39,7 @@ All of the parameters of Interact are in the *settings.php* file. There are a lo
 
 If you want to add your own style, copy an existing to get started... and commit it on GitHub if you want to contribute to Interact's ongoing developpement!
 
-![Interact PHP with various CSS](http://charleslabs.fr/projects/20180817_Interact_PHP/themes.png)
+![Interact PHP with various CSS](sample/themes.png)
 
 ## Troubleshooting
 
