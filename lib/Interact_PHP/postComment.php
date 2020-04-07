@@ -21,7 +21,7 @@ if (!is_null(Settings::RECAPTCHA_PUBLIC_KEY)&&!is_null(Settings::RECAPTCHA_SECRE
 }
 else
 {
-    $api_url = "https://www.google.com/recaptcha/api/siteverify?secret=".Settings::RECAPTCHA_SECRET_KEY."&response=".$_POST['g-recaptcha-response']."&remoteip=".$_SERVER['REMOTE_ADDR'];
+    $api_url = "https://www.google.com/recaptcha/api/siteverify?secret=".urlencode(Settings::RECAPTCHA_SECRET_KEY)."&response=".urlencode($_POST['g-recaptcha-response'])."&remoteip=".urlencode($_SERVER['REMOTE_ADDR']);
 
     $decode = json_decode(file_get_contents($api_url), true);
 
