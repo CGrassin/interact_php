@@ -158,6 +158,7 @@
   }
   .comment-box .comment-message {
     margin-bottom: 3px;
+    overflow-wrap: break-word;
   }
   .comment-box .comment-date {
     font-size: 85%;
