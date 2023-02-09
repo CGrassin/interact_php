@@ -75,5 +75,5 @@ ob_flush();
 flush();
 
 /* Callback */
-Settings::CommentCallback($page,$name,$message);
+Settings::CommentCallback($_POST['page'],$name,$_POST['message']);
 ?>

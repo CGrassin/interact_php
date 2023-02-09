@@ -1,19 +1,7 @@
 <?php
-// TODO
-// * File with all texts
-// * better sanitation
-// * admin
-
-// Features :
-// * comments in xml
-// * Super simple setup (no DB, no login, no cookies, 2 lines to add a comment section to any page)
-// * Customizable style, easy to match look & feel to your website
-// * email on new comment
-// * PHP 5 & 7
 namespace Interact_PHP;
 
 require_once('settings.php');
-
 
 /* Entry function to display the comment zone. 
 Optionnal argument: Page title is the title of the current 
@@ -47,7 +35,7 @@ function Interact_PHP($pageTitle=NULL){
     <p class="text-muted text-center">Please enable javascript to comment.</p>
     </noscript>
     
-    <form class="comment-form" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" id="commentForm" onsubmit="return interactphpSubmit()">
+    <form class="comment-form" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" id="commentForm" onsubmit="return interactphpSubmit(<?php echo Settings::MAX_USERNAME_LENGTH.",".Settings::MAX_COMMENT_LENGTH; ?>)">
     <div id="interactphp-alert" class="hidden" role="alert">Error sending comment...</div>
     
     <label class="sr-only" for="interactphp-message">Comment</label>

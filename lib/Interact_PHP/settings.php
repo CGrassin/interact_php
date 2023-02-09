@@ -61,10 +61,10 @@
 
   
     /* Advanced feature: this function is called whenever a comment is sent.
-    One typical usage is to notify yourself with a mail on each new comment.
-    The conection to the user will be closed BEFORE this function is called; 
+    One typical usage is to notify yourself with an email on each new comment.
+    The connection to the user will be closed BEFORE this function is called; 
     this means that you can do lengthy computation here.
-    Warning: the parameters are the user's input. Don't thrust it, be on the safe side!*/
+    Warning: the parameters are the unsanitized user's input. Don't thrust them!*/
     public static function CommentCallback($titleOfPage,$nameOfCommenter,$commentContent) {
       // require_once $_SERVER['DOCUMENT_ROOT'].'/lib/PHPMailer/SMTP.php';
       // require_once $_SERVER['DOCUMENT_ROOT'].'/lib/PHPMailer/PHPMailer.php';
