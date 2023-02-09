@@ -48,17 +48,6 @@
 
     /* Enable/disable Markdown syntax in comments. */
     const ENABLE_MARKDOWN_SYNTAX = true; // default: true
-
-
-    /* Admin page (NOT IMPLEMENTED YET) */
-    /* Admin name, used as login and in comments. */
-    const ADMIN_LOGIN = NULL; // default: NULL (disabled)
-    /* SHA256 of the admin password. To find the SHA256 on Linux,
-    use this command: `echo -n your_password | sha256sum` */
-    const ADMIN_PASSWORD = NULL; // default: NULL (disabled)
-    /* HTML string displayed in the admin badges. */
-    const ADMIN_BADGE = "Admin"; // default: "Admin"
-
   
     /* Advanced feature: this function is called whenever a comment is sent.
     One typical usage is to notify yourself with an email on each new comment.

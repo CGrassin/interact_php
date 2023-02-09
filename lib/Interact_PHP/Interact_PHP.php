@@ -87,9 +87,6 @@ function Interact_PHP($pageTitle=NULL){
         $count++;
         echo '<li class="comment">';
         echo '<p class="comment-author"><span class="comment-rank">#'.$count.'</span> '.htmlspecialchars($comment->{"name"});
-        if ($comment->attributes()['admin'] == "true") {
-          echo ' <span class="badge">'.Settings::ADMIN_BADGE.'</span>';
-        }
         echo '</p>';
         echo '<p class="comment-message">';
         if(Settings::ENABLE_MARKDOWN_SYNTAX){
@@ -114,7 +111,7 @@ function Interact_PHP($pageTitle=NULL){
   whole filesystem is in 777.
   SECURITY 2: htmlspecialchars is used to prevent breaking the XML structure
   with nasty input. */
-  function addComment($page,$name,$message,$isAdmin=FALSE) {
+  function addComment($page,$name,$message) {
     try
     {
       $filename = NameToCommentFile($page);
@@ -134,9 +131,6 @@ function Interact_PHP($pageTitle=NULL){
       
       $comment = $xml->addChild('comment');
       $comment->addAttribute('id',uniqid());
-      if ($isAdmin === TRUE) {
-        $comment->addAttribute('admin','true');
-      }
       $comment->addChild('date', time());
       $comment->addChild('name', htmlspecialchars($name));
       $comment->addChild('message', htmlspecialchars($message));
@@ -146,40 +140,6 @@ function Interact_PHP($pageTitle=NULL){
       $xml->asXML($filename);
       return true;
     } catch(Exception $e){}
-      return false;
-    }
-    
-    /* Deletes a comment from a XML file */
-    function deleteComment($filename,$id) {
-      if (file_exists($filename)) {
-        $xml = simplexml_load_string(file_get_contents($filename));
-        unset($xml->xpath("//comments/comment[@id='" . $id . "']")[0][0]);
-        $xml->asXML($filename);
-        return true;
-      }
-      return false;
-    }
-    
-    /* Promote comment as admin (displays badge next to comment) */
-    function setAdmin($filename,$id,$isAdmin) {
-      if (file_exists($filename)) {
-        $xml= simplexml_load_string(file_get_contents($filename));
-        foreach ($xml->children() as $comment) {
-          if ($comment->attributes()['id'] == $id) {
-            
-            if(!isset($comment->attributes()['admin']))
-            $comment->addAttribute('admin','false');
-            
-            if ($isAdmin === true)
-            $comment->attributes()['admin'] = 'true';
-            else
-            $comment->attributes()['admin'] = 'false';
-            
-            $xml->asXML($filename);
-            return true;
-          }
-        }
-      }
       return false;
     }
     
@@ -197,7 +157,6 @@ function Interact_PHP($pageTitle=NULL){
       }
       return trim ($string);
     }
-    
     
     /* Sanitizes string to be used as a filename. It takes no chances, and
     works on any filesystem. */
