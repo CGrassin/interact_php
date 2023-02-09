@@ -6,7 +6,7 @@ Interact is a simple PHP open-source comment system that can be added to any web
 
 ![Interact PHP with the modern interface](sample/modern.png)
 
-Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), Interact does not use an SQL database but stores comments as XML files. Many third-party comment systems like Disqus, IntenseDebate, Livefyre, Facebook Comments and Google+ Comments, suffer from these problems and impose them and many restrictions onto their users, meaning you and your website's visitors.
+Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), Interact does not use an SQL database but stores comments as XML files. Many third-party comment systems like Disqus, IntenseDebate, Livefyre, Facebook Comments and Google+ Comments, suffer from these problems and impose them and many other restrictions onto their users, meaning you and your website's visitors.
 
 ## Features
 
@@ -20,22 +20,24 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 
 ## Installation and setup
 
+**Requirements:** PHP≥5, php-xml.
+
 1. Download [Interact on GitHub](https://github.com/CGrassin/interact_php).
 2. Extract under your website's root.
 3. Customize Interact's behavior to your needs by editing the *Interact_PHP/settings.php* file.
-4. Give the directory that will contain the comments 777 permission (`chmod 777 path/to/Interact_PHP/Comments`).
+4. Give the directory that will contain the comments 777 permission (`chmod -R 777 path/to/Interact_PHP/Comments`). Alternatively, `chown` the folder to the user that is configured to execute PHP scripts as, for example "www-data". And then simply give the "path/to/Interact_PHP/Comments" directory permissions "755". 
 
-Hurray, Interact is ready to go! To add a comment section to a page, just insert the following PHP:
+Hurray, Interact is ready to go! To add a comment section to a page, just insert the following PHP in any page:
 ```php
 <?php 
     include_once($_SERVER['DOCUMENT_ROOT'].'/lib/Interact_PHP/Interact_PHP.php');
     \Interact_PHP\Interact_PHP(); 
 ?>
-``` 
+```
 
 ## Parameters and cutomization
 
-All of the parameters of Interact are in the *settings.php* file. There are a lot of comments to assist you in the configuration process.
+All of the core parameters of Interact are in the *settings.php* file. There are a lot of comments to assist you in the configuration process.
 
 If you want to add your own style, copy an existing to get started... and commit it on GitHub if you want to contribute to Interact's ongoing developpement!
 
@@ -48,7 +50,8 @@ This section describes the various problems you may encounter while installing/u
 * **I can't add comments**
 
 You should check the permissions of the folder containing the comments (*Interact/Comments* by default). The PHP user must be able to write there. Setting 777 works (`chmod -R 777 Comments`).
-For some reason, the libxml PHP library was not enabled on PHP7 on one of my servers. Installing it fixed the issue (`apt-get install php7.0-xml`, reboot when completed).
+
+If the libxml PHP library is not enabled, installing should fix the issue (e.g. `sudo apt-get install php-xml`, restart apache when completed).
 
 * **The CSS does not load**
 
@@ -58,7 +61,14 @@ The path of the library relative to the root of your website is probably incorre
 
 You need to make sure that your reCAPTACHA public and secret keys are correct. Interact uses reCAPTCHA v2. More info at https://developers.google.com/recaptcha/docs/display
 
-## Future features
+## Future features/Work in progress
 
-* A simple admin interface to manage comments (*Work In Progress*)
-* A tag to identify the admin (*Work In Progress*)
+By priority:
+* New feature: collapsible comment form if more than N comments
+* Admin features
+    * A simple admin interface to manage comments (delete and promote)
+    * A tag to identify the admin
+* Support multiple comment forms per page (remove depency on "id")
+* Improve localisation (provide configuration of all user-visible text)
+
+Please submit a GitHub issue for feature requests.
