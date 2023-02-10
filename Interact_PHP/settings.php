@@ -4,7 +4,7 @@
   class Settings
   {
     /* Path of the library, relative to the root of the website. */
-    const LIBRARY_ROOT = '/lib/Interact_PHP'; // default: '/lib/Interact_PHP'
+    const LIBRARY_ROOT = '/Interact_PHP'; // default: '/Interact_PHP'
 
     /* Google's reCAPTCHA anti-spam 'I am not a robot' checkbox. Optionnal
     but recommended. Copy paste your reCAPTCHA v2 keys here. */
@@ -55,9 +55,9 @@
     this means that you can do lengthy computation here.
     Warning: the parameters are the unsanitized user's input. Don't thrust them!*/
     public static function CommentCallback($titleOfPage,$nameOfCommenter,$commentContent) {
-      // require_once $_SERVER['DOCUMENT_ROOT'].'/lib/PHPMailer/SMTP.php';
-      // require_once $_SERVER['DOCUMENT_ROOT'].'/lib/PHPMailer/PHPMailer.php';
-      // require_once $_SERVER['DOCUMENT_ROOT'].'/lib/PHPMailer/Exception.php';
+      // require_once $_SERVER['DOCUMENT_ROOT'].'/PHPMailer/SMTP.php';
+      // require_once $_SERVER['DOCUMENT_ROOT'].'/PHPMailer/PHPMailer.php';
+      // require_once $_SERVER['DOCUMENT_ROOT'].'/PHPMailer/Exception.php';
   
       // try {
       //   $mail = new \PHPMailer\PHPMailer\PHPMailer();
