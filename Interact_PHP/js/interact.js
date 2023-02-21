@@ -45,6 +45,7 @@ function interactphpSubmit(maxNameLen=30, maxCommentLen=2000) {
 				} else {
 					document.getElementById('interactphp-alert').innerHTML = xmlhttp.responseText;
 					document.getElementById('interactphp-alert').classList.remove('hidden');
+					if (window.grecaptcha) grecaptcha.reset();
 				}
 			}
 		}; 

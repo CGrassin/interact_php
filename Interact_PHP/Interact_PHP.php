@@ -120,12 +120,9 @@ function Interact_PHP($pageTitle=NULL){
         mkdir(Settings::COMMENTS_ROOT, 0777, true);
       }
       
-      if (file_exists($filename)) 
-      {
+      if (file_exists($filename)) {
         $xml = simplexml_load_string(file_get_contents($filename));
-      } 
-      else 
-      {
+      } else  {
         $xml = simplexml_load_string('<?xml version="1.0" encoding="UTF-8"?><comments></comments>');
       }
       
