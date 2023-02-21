@@ -48,7 +48,15 @@
 
     /* Enable/disable Markdown syntax in comments. */
     const ENABLE_MARKDOWN_SYNTAX = true; // default: true
-  
+
+    /* Spam filter: if any of the words of the filter are present in a comment,
+    it will be discarded.
+    Warning: this is an aggressive feature, make sure to only put
+    strings that would NEVER appear outside of spam.
+    E.g. ['cialis', 'viagra']
+    */
+    const SPAM_FILTER = []; // default: empty array
+
     /* Advanced feature: this function is called whenever a comment is sent.
     One typical usage is to notify yourself with an email on each new comment.
     The connection to the user will be closed BEFORE this function is called; 

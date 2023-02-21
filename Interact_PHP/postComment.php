@@ -55,6 +55,14 @@ if(strlen($page)<=0){
     exit;
 }
 
+/* Check spam filter. */
+foreach (Settings::SPAM_FILTER as $filter) {
+    if(str_contains($message, $filter)){
+        echo "System error... please try again later.";
+        exit;
+    }
+}
+
 /* At this point, the input is valid. Add the comment to the XML file. */
 ignore_user_abort(true);
 set_time_limit(0);
