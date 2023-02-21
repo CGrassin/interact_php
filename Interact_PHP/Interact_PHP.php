@@ -98,6 +98,9 @@ function Interact_PHP($pageTitle=NULL){
         echo '<p class="comment-date text-muted">on '.date("F j Y, G:i", intval($comment->{"date"})).'</p>';
         echo '</li>';
       }
+      if ($count===0) {
+        echo '<li class="comment"><p>'.Settings::NO_COMMENTS_MESSAGE.'</p></li>';
+      }
     }
     else {
       echo '<li class="comment"><p>'.Settings::NO_COMMENTS_MESSAGE.'</p></li>';
