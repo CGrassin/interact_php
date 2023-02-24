@@ -1,3 +1,7 @@
+window.onload = function() {
+	document.getElementById("commentForm").classList.remove("hidden");
+}
+
 function interactphpSubmit(maxNameLen=30, maxCommentLen=2000) {
 	document.getElementById('interactphp-alert').classList.add('hidden');
 	var valid = true;

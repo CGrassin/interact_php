@@ -31,11 +31,10 @@ function Interact_PHP($pageTitle=NULL){
   else { ?>
     
     <noscript>
-    <style>#commentForm {display:none;}</style>
-    <p class="text-muted text-center">Please enable javascript to comment.</p>
+    <p class="text-muted text-center">Please enable javascript to be able to comment.</p>
     </noscript>
     
-    <form class="comment-form" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" id="commentForm" onsubmit="return interactphpSubmit(<?php echo Settings::MAX_USERNAME_LENGTH.",".Settings::MAX_COMMENT_LENGTH; ?>)">
+    <form class="comment-form hidden" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" id="commentForm" onsubmit="return interactphpSubmit(<?php echo Settings::MAX_USERNAME_LENGTH.",".Settings::MAX_COMMENT_LENGTH; ?>)">
     <div id="interactphp-alert" class="hidden" role="alert">Error sending comment...</div>
     
     <label class="sr-only" for="interactphp-message">Comment</label>
