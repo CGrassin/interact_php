@@ -1,5 +1,10 @@
-window.onload = function() {
+function showCommentForm() {
 	document.getElementById("commentForm").classList.remove("hidden");
+}
+if(window.addEventListener){
+  window.addEventListener('DOMContentLoaded', showCommentForm)
+}else{
+  window.attachEvent('onload', showCommentForm)
 }
 
 function interactphpSubmit(maxNameLen=30, maxCommentLen=2000) {
