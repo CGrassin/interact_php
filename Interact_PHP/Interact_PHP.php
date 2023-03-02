@@ -29,36 +29,34 @@ function Interact_PHP($pageTitle=NULL){
     echo '<p class="text-muted text-center">'.Settings::DISABLE_COMMENTS_MESSAGE.'</p>';
   }
   else { ?>
-    
     <noscript>
     <p class="text-muted text-center">Please enable javascript to be able to comment.</p>
     </noscript>
     
-    <form class="comment-form hidden" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" id="commentForm" onsubmit="return interactphpSubmit(<?php echo Settings::MAX_USERNAME_LENGTH.",".Settings::MAX_COMMENT_LENGTH; ?>)">
-    <div id="interactphp-alert" class="hidden" role="alert">Error sending comment...</div>
-    
-    <label class="sr-only" for="interactphp-message">Comment</label>
-    <textarea id="interactphp-message" class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="Enter your comment..." onblur="recaptchaDisplay()"></textarea>
-    
-    <div class="input-group">
-    <div class="interactphp-nickname">
-    <label class="sr-only" for="interactphp-name">Nickname</label>
-    <input id="interactphp-name" class="input" type="text" name="name" placeholder="Nickname" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onblur="recaptchaDisplay()">
-    </div>
-    
-    <div class="interactphp-submit">
-    <button class="input" type="submit"><?php echo Settings::COMMENT_BUTTON; ?></button>
-    </div>
-    </div>
-    
-    <input type="text" class="hidden" name="page" value="<?php echo $pageTitle?>">
-    
-    <?php
-    if (!is_null(Settings::RECAPTCHA_PUBLIC_KEY)&&!is_null(Settings::RECAPTCHA_SECRET_KEY)) {
-      echo '<div id="google-recaptcha" class="text-center"><div style="display: inline-block;" class="g-recaptcha" data-sitekey="'.Settings::RECAPTCHA_PUBLIC_KEY.'"></div></div>';
-      echo "<script src='https://www.google.com/recaptcha/api.js'></script>";
-    } ?>
-    
+    <form class="comment-form hidden" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" onsubmit="return interactphpSubmit(this, <?php echo Settings::MAX_USERNAME_LENGTH.",".Settings::MAX_COMMENT_LENGTH; ?>)">
+      <div class="interactphp-alert hidden" role="alert">Error sending comment...</div>
+      
+      <label class="sr-only" for="interactphp-message">Comment</label>
+      <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="Enter your comment..." onfocus="recaptchaDisplay(this.parentElement.parentElement)"></textarea>
+      
+      <div class="input-group">
+        <div class="interactphp-nickname">
+          <label class="sr-only" for="interactphp-name">Nickname</label>
+          <input class="input" type="text" name="name" placeholder="Nickname" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onfocus="recaptchaDisplay(this.parentElement.parentElement.parentElement)">
+        </div>
+        
+        <div class="interactphp-submit">
+        <button class="input" type="submit"><?php echo Settings::COMMENT_BUTTON; ?></button>
+        </div>
+      </div>
+      
+      <input type="text" class="hidden" name="page" value="<?php echo $pageTitle?>">
+      
+      <?php
+      if (!is_null(Settings::RECAPTCHA_PUBLIC_KEY)&&!is_null(Settings::RECAPTCHA_SECRET_KEY)) {
+        echo '<div class="google-recaptcha text-center"><div style="display: inline-block;" class="g-recaptcha" data-sitekey="'.Settings::RECAPTCHA_PUBLIC_KEY.'"></div></div>';
+        echo "<script src='https://www.google.com/recaptcha/api.js'></script>";
+      } ?>
     </form>
     
     <?php } ?>

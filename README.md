@@ -16,7 +16,7 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 * **Anti-Spam** system using Google's reCAPTCHA v2 *(optional)*.
 * **Pure JS** (no JQuery required).
 * **Secure** by design.
-* Inline **Markdown syntax** support in comments (**bold**, *italics*, ~~strikethrough~~ and `inline code`) *(can be disabled)*.
+* Inline **Markdown syntax** support in comments (**bold**, *italics*, ~~strike-through~~ and `inline code`) *(can be disabled)*.
 * **Open-source** (MIT license).
 
 ## Installation and setup
@@ -32,15 +32,19 @@ Hurray, Interact is ready to go! To add a comment section to a page, just insert
 ```php
 <?php 
     include_once($_SERVER['DOCUMENT_ROOT'].'/Interact_PHP/Interact_PHP.php');
-    \Interact_PHP\Interact_PHP(); 
+    \Interact_PHP\Interact_PHP("<some-id-such-as-article-title>"); 
 ?>
 ```
 
-## Parameters and cutomization
+The parameter `<some-id-such-as-article-title>` is what will be used to associate the comments with this form. If you call `\Interact_PHP\Interact_PHP()` without an argument, it creates an ID from the URL, but this is not recommended.
+
+You can call `\Interact_PHP\Interact_PHP()` multiple times per page if you need multiple comment forms (e.g. a page with several articles).
+
+## Parameters and customization
 
 All of the core parameters of Interact are in the *settings.php* file. There are a lot of comments to assist you in the configuration process.
 
-If you want to add your own style, copy an existing CSS file to get started... and commit it on GitHub if you want to contribute to Interact's ongoing developpement!
+If you want to add your own style, copy an existing CSS file to get started... and commit it on GitHub if you want to contribute to Interact's ongoing development!
 
 ![Interact PHP with various CSS](sample/themes.png)
 
@@ -52,7 +56,7 @@ This section describes the various problems you may encounter while installing/u
 
 You should check the permissions of the folder containing the comments (*Interact/Comments* by default). The PHP user must be able to write there. Setting 777 works (`chmod -R 777 Comments`).
 
-If the libxml PHP library is not enabled, installing should fix the issue (e.g. `sudo apt-get install php-xml`, restart apache when completed).
+If the libxml PHP library is not enabled, installing should fix the issue (e.g. `sudo apt-get install php-xml`, restart Apache when completed).
 
 * **The CSS does not load**
 
@@ -69,8 +73,7 @@ This is the list of future features, by priority:
 * Admin features:
     * A simple admin interface to manage comments (view, delete and promote)
     * A tag to identify the admin's comments
-* Support multiple comment forms per page (remove dependency on "id")
-* Improve localisation (provide configuration of all user-visible text)
+* Improve localization (provide configuration of all user-visible text)
 
 Please submit a [GitHub issue](https://github.com/CGrassin/interact_php/issues) for feature requests or bug reports.
 
