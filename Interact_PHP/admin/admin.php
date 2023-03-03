@@ -31,9 +31,11 @@ function setAdmin($filename, $id, $isAdmin) {
   }
   return false;
 }
-function endOfPage($p=''){
-  echo p.'</div></body></html>';
-  die();
+function endOfPage($p='',$isError=false){
+  echo $p;
+  if($isError)
+    echo "<p style=\"text-align:center\"><a href=\"admin.php\" >Go back</a></p>";
+  die('</div></body></html>');
 }
 
 ?>
@@ -56,7 +58,7 @@ function endOfPage($p=''){
   // If no login/password is set, admin page is disabled
   if (is_null(Settings::ADMIN_PASSWORD)) {
     http_response_code(403);
-    endOfPage('<p class="text-center">Admin page is disabled.</p>');    
+    endOfPage('<p class="text-center">Admin page is disabled.</p>',true);    
   }
 
   // POST ACTIONS
@@ -76,7 +78,7 @@ function endOfPage($p=''){
           header("Location: admin.php");
           die();
         } else {
-          endOfPage('<p class="text-center">Error while deleting this comment.</p>');
+          endOfPage('<p class="text-center">Error while deleting this comment.</p>',true);
         }
     }
     // Promote/demote
@@ -91,27 +93,28 @@ function endOfPage($p=''){
     // Login
     elseif (!isset($_SESSION['user']) && $_POST['action'] === "login") {
       if (!isset($_SESSION['user']) && isset( $_POST['password'])) {
+        // Check captcha
         if (!is_null(Settings::RECAPTCHA_PUBLIC_KEY) && !is_null(Settings::RECAPTCHA_SECRET_KEY)) {
           if (!isset($_POST['g-recaptcha-response'])) {
-            endOfPage('<p class="text-center">Please enable Javascript and/or check the reCAPTCHA!</p>');  
+            endOfPage('<p class="text-center">Please enable Javascript and/or check the reCAPTCHA!</p>',true);  
           } else {
             $api_url = "https://www.google.com/recaptcha/api/siteverify?secret=".urlencode(Settings::RECAPTCHA_SECRET_KEY)."&response=".urlencode($_POST['g-recaptcha-response'])."&remoteip=".urlencode($_SERVER['REMOTE_ADDR']);
 
             $decode = json_decode(file_get_contents($api_url), true);
 
             if ($decode['success'] == false) {
-              endOfPage('<p class="text-center">Please check the reCAPTCHA!</p>');  
+              endOfPage('<p class="text-center">Please check the reCAPTCHA!</p>',true);  
             }
           }
         }
+        // Check password
         if(Settings::ADMIN_PASSWORD===hash('sha256', $_POST['password'])) {
           $_SESSION['user'] = "admin";
           header("location: admin.php");
           die();
         }
         else {
-          http_response_code(403);
-          endOfPage('<p class="text-center">Wrong login/password.</p>');    
+          endOfPage('<p class="text-center">Wrong login/password.</p>',true);    
         }
       }
     }
