@@ -83,8 +83,10 @@ function Interact_PHP($pageTitle=NULL){
       foreach ($xml->children() as $comment) {
         $count++;
         echo '<li class="comment">';
-        echo '<p class="comment-author"><span class="comment-rank">#'.$count.'</span> '.htmlspecialchars($comment->{"name"});
-        echo '</p>';
+        echo '<p class="comment-author"><span class="comment-rank">#'.$count.'</span> ';
+        if ($comment->attributes()['admin'] == "true")
+          echo ' <span class="badge">'.Settings::ADMIN_BADGE.'</span> ';
+        echo htmlspecialchars($comment->{"name"}).'</p>';
         echo '<p class="comment-message">';
         if(Settings::ENABLE_MARKDOWN_SYNTAX){
           echo parseMarkdown(preg_replace("/\\\\n/","<br>",htmlspecialchars($comment->{"message"})));

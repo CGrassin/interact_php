@@ -35,10 +35,10 @@
     /* Title of the comment area (HTML). */
     const TITLE_COMMENT_BOX = "What is on your mind?";
 
-    /* Comment submit comment button text. */
+    /* Comment submit comment button text (HTML). */
     const COMMENT_BUTTON = "Comment";
   
-    /* String displayed when there is not any comment (HTML). */
+    /* HTML String displayed when there is not any comment (HTML). */
     const NO_COMMENTS_MESSAGE = "No comments yet!";
 
     /* Comment max allowed length. */
@@ -56,6 +56,13 @@
     E.g. ['cialis', 'viagra']
     */
     const SPAM_FILTER = []; // default: empty array
+
+    /* Admin page */
+    /* SHA256 of the admin password. To find the SHA256 on Linux,
+    use this command: `echo -n your_password | sha256sum` */
+    const ADMIN_PASSWORD = NULL; // default: NULL (disabled)
+    /* HTML string displayed in the admin badges. */
+    const ADMIN_BADGE = "Author"; // default: "Author"
 
     /* Advanced feature: this function is called whenever a comment is sent.
     One typical usage is to notify yourself with an email on each new comment.

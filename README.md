@@ -10,6 +10,7 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 
 ## Features
 
+* No dependency.
 * **Fast** and convenient for your users with responsive design.
 * Very **simple** setup: no database to configure, just install it and add 2 lines of PHP where you want your comment section to be.
 * Easily **customizable** style and behavior to match the look & feel of your website.
@@ -25,7 +26,7 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 
 1. Download/clone [Interact on GitHub](https://github.com/CGrassin/interact_php).
 2. Put the "Interact_PHP" folder under your website's root (or relocate the folder where you want and change the `LIBRARY_ROOT` setting accordingly).
-3. Customize Interact's behavior to your needs by editing the *Interact_PHP/settings.php* file.
+3. *Optional*: customize Interact's behavior to your needs by editing the *Interact_PHP/settings.php* file.
 4. Give the directory that will contain the comments 777 permission (`chmod -R 777 path/to/Interact_PHP/Comments`). Alternatively, `chown` the folder to the user that is configured to execute PHP scripts as, for example "www-data". And then simply give the "path/to/Interact_PHP/Comments" directory permissions "755". 
 
 Hurray, Interact is ready to go! To add a comment section to a page, just insert the following PHP in any page:
@@ -47,6 +48,11 @@ All of the core parameters of Interact are in the *settings.php* file. There are
 If you want to add your own style, copy an existing CSS file to get started... and commit it on GitHub if you want to contribute to Interact's ongoing development!
 
 ![Interact PHP with various CSS](sample/themes.png)
+## Admin interface
+
+If you set up a value for `ADMIN_PASSWORD`, Interact PHP enables a very simple admin interface that allows to delete and promote comments (to show an "Author" badge).
+
+It is accessible from the url: `https://your_website_url/path_to_interact/admin/admin.php`.
 
 ## Troubleshooting
 
@@ -70,9 +76,6 @@ You need to make sure that your reCAPTACHA public and secret keys are correct. I
 
 This is the list of future features, by priority:
 * New feature: collapsible comment box if more than the comment box is higher than N pixels
-* Admin features:
-    * A simple admin interface to manage comments (view, delete and promote)
-    * A tag to identify the admin's comments
 * Improve localization (provide configuration of all user-visible text)
 
 Please submit a [GitHub issue](https://github.com/CGrassin/interact_php/issues) for feature requests or bug reports.
