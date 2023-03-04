@@ -27,12 +27,12 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 1. Download/clone [Interact on GitHub](https://github.com/CGrassin/interact_php).
 2. Put the "Interact_PHP" folder under your website's root (or relocate the folder where you want and change the `LIBRARY_ROOT` setting accordingly).
 3. *Optional*: customize Interact's behavior to your needs by editing the *Interact_PHP/settings.php* file and/or the *Interact_PHP/strings.xml*.
-4. Give the directory that will contain the comments 777 permission (`chmod -R 777 path/to/Interact_PHP/Comments`). Alternatively, `chown` the folder to the user that is configured to execute PHP scripts as, for example "www-data". And then simply give the "path/to/Interact_PHP/Comments" directory permissions "755". 
+4. Give the directory that will contain the comments 777 permission (`chmod -R 777 path/to/interact_php/Comments`). Alternatively, `chown` the folder to the user that is configured to execute PHP scripts as, for example "www-data". And then simply give the "path/to/Interact_PHP/Comments" directory permissions "755". 
 
 Hurray, Interact is ready to go! To add a comment section to a page, just insert the following PHP in any page:
 ```php
 <?php 
-    include_once($_SERVER['DOCUMENT_ROOT'].'/Interact_PHP/Interact_PHP.php');
+    include_once($_SERVER['DOCUMENT_ROOT'].'/interact_php/Interact_PHP.php');
     \Interact_PHP\Interact_PHP("<some-id-such-as-article-title>"); 
 ?>
 ```
@@ -55,7 +55,7 @@ If you set up a value for `ADMIN_PASSWORD`, Interact PHP enables a very simple a
 
 ![Interact PHP's admin interface](sample/admin.png)
 
-It is accessible from the url: `https://your_website_url/path_to_interact/admin/admin.php`.
+It is accessible from the url: `https://your_website_url/path/to/interact_php/admin/admin.php`.
 
 ## Internationalization
 

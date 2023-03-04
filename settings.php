@@ -4,7 +4,7 @@
   class Settings
   {
     /* Path of the library, relative to the root of the website. */
-    const LIBRARY_ROOT = '/Interact_PHP'; // default: '/Interact_PHP'
+    const LIBRARY_ROOT = '/interact_php'; // default: '/Interact_PHP'
 
     /* Google's reCAPTCHA anti-spam 'I am not a robot' checkbox. Optionnal
     but recommended. Copy paste your reCAPTCHA v2 keys here. */

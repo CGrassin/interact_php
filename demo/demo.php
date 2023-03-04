@@ -6,7 +6,7 @@
 <body>
 	<h1>Interact PHP</h1>
 	<?php 
-	    include_once($_SERVER['DOCUMENT_ROOT'].'/Interact_PHP/Interact_PHP.php');
+	    include_once($_SERVER['DOCUMENT_ROOT'].'/interact_php/Interact_PHP.php');
 	    \Interact_PHP\Interact_PHP(); 
 	?>
 </body>
