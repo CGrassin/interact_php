@@ -1,14 +1,25 @@
 <?php
 namespace Interact_PHP;
-
 require_once('settings.php');
+
+class Interact_PHP_Translations{
+  private $strings_xml;
+  public function __construct($path){
+    $this->strings_xml = simplexml_load_string(file_get_contents($path));
+  }
+
+  public function get_string($lang, $id){
+    return $this->strings_xml->xpath('/strings/translation[@lang="'.$lang.'"]/string[@id="'.$id.'"]')[0];
+  }
+}
 
 /* Entry function to display the comment zone. 
 Optionnal argument: Page title is the title of the current 
 article. You may want to set it juste to keep the folder clear;
 It will be taken from the url otherwise. */
-function Interact_PHP($pageTitle=NULL){
-  
+function Interact_PHP($pageTitle=NULL, $lang="default"){
+  $strings = new Interact_PHP_Translations(__DIR__."/strings.xml");
+
   // If no title is provided, take it from the url (removing the query string first)
   if (is_null($pageTitle)) {
     $pageTitle=strtok($_SERVER["REQUEST_URI"],'?');
@@ -22,36 +33,37 @@ function Interact_PHP($pageTitle=NULL){
   <div style="width: 100%">
   <div class="comment-box">
   
-  <p class="comment-title"><?php echo Settings::TITLE_COMMENT_BOX; ?></p>
+  <p class="comment-title"><?= $strings->get_string($lang,"title") ?></p>
   
   <?php
   if (Settings::DISABLE_COMMENTS) {
-    echo '<p class="text-muted text-center">'.Settings::DISABLE_COMMENTS_MESSAGE.'</p>';
+    echo '<p class="text-muted text-center">'.$strings->get_string($lang,"comments-diabled").'</p>';
   }
   else { ?>
     <noscript>
-    <p class="text-muted text-center">Please enable javascript to be able to comment.</p>
+    <p class="text-muted text-center"><?= $strings->get_string($lang,"no-js") ?></p>
     </noscript>
     
     <form class="comment-form hidden" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" onsubmit="return interactphpSubmit(this, <?php echo Settings::MAX_USERNAME_LENGTH.",".Settings::MAX_COMMENT_LENGTH; ?>)">
-      <div class="interactphp-alert hidden" role="alert">Error sending comment...</div>
-      <div class="interactphp-info hidden" role="status">Sending comment...</div>
+      <div class="interactphp-alert hidden" role="alert"></div>
+      <div class="interactphp-info hidden" role="status"><?= $strings->get_string($lang,"sending-comment") ?></div>
       
-      <label class="sr-only" for="interactphp-message">Comment</label>
-      <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="Enter your comment..." onfocus="recaptchaDisplay(this.parentElement.parentElement)"></textarea>
+      <label class="sr-only" for="interactphp-message"><?= $strings->get_string($lang,"comment-label") ?></label>
+      <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="<?= $strings->get_string($lang,"comment-placeholder") ?>" onfocus="recaptchaDisplay(this.parentElement.parentElement)"></textarea>
       
       <div class="input-group">
         <div class="interactphp-nickname">
-          <label class="sr-only" for="interactphp-name">Nickname</label>
-          <input class="input" type="text" name="name" placeholder="Nickname" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onfocus="recaptchaDisplay(this.parentElement.parentElement.parentElement)">
+          <label class="sr-only" for="interactphp-name"><?= $strings->get_string($lang,"name-placeholder") ?></label>
+          <input class="input" type="text" name="name" placeholder="<?= $strings->get_string($lang,"name-placeholder") ?>" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onfocus="recaptchaDisplay(this.parentElement.parentElement.parentElement)">
         </div>
         
         <div class="interactphp-submit">
-        <button class="input" type="submit"><?php echo Settings::COMMENT_BUTTON; ?></button>
+        <button class="input" type="submit"><?= $strings->get_string($lang,"submit-btn") ?></button>
         </div>
       </div>
       
-      <input type="text" class="hidden" name="page" value="<?php echo $pageTitle?>">
+      <input type="hidden" class="hidden" name="page" value="<?php echo $pageTitle; ?>">
+      <input type="hidden" class="hidden" name="lang" value="<?php echo $lang; ?>">
       
       <?php
       if (!is_null(Settings::RECAPTCHA_PUBLIC_KEY)&&!is_null(Settings::RECAPTCHA_SECRET_KEY)) {
@@ -63,7 +75,7 @@ function Interact_PHP($pageTitle=NULL){
     <?php } ?>
     
     <ul class="comment-list">
-    <?php displayComments($pageTitle); ?>
+    <?php displayComments($pageTitle, $strings, $lang); ?>
     </ul>
     </div>
     </div>
@@ -76,17 +88,17 @@ function Interact_PHP($pageTitle=NULL){
   SECURITY: if for some reason, $page where to be compromized, the
   attacker would NOT be able to see anything else than comments thank
   to the restriction of 'NameToCommentFile'.*/
-  function displayComments($page=NULL) {
+  function displayComments($page, $strings, $lang) {
     $filename = NameToCommentFile($page);
     if (file_exists($filename)) {
-      $xml= simplexml_load_string(file_get_contents($filename));
+      $xml = simplexml_load_string(file_get_contents($filename));
       $count=0;
       foreach ($xml->children() as $comment) {
         $count++;
         echo '<li class="comment">';
         echo '<p class="comment-author"><span class="comment-rank">#'.$count.'</span> ';
         if ($comment->attributes()['admin'] == "true")
-          echo ' <span class="badge">'.Settings::ADMIN_BADGE.'</span> ';
+          echo ' <span class="badge">'.$strings->get_string($lang,"admin-badge").'</span> ';
         echo htmlspecialchars($comment->{"name"}).'</p>';
         echo '<p class="comment-message">';
         if(Settings::ENABLE_MARKDOWN_SYNTAX){
@@ -99,11 +111,11 @@ function Interact_PHP($pageTitle=NULL){
         echo '</li>';
       }
       if ($count===0) {
-        echo '<li class="comment"><p>'.Settings::NO_COMMENTS_MESSAGE.'</p></li>';
+        echo '<li class="comment"><p>'.$strings->get_string($lang,"no-comment").'</p></li>';
       }
     }
     else {
-      echo '<li class="comment"><p>'.Settings::NO_COMMENTS_MESSAGE.'</p></li>';
+      echo '<li class="comment"><p>'.$strings->get_string($lang,"no-comment").'</p></li>';
     }
   }
   

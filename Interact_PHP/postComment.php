@@ -4,10 +4,14 @@ namespace Interact_PHP;
 require_once('settings.php');
 require_once('Interact_PHP.php');
 
+// Get strings
+$lang = isset($_POST['lang']) ? $_POST['lang'] : 'default';
+$strings = new Interact_PHP_Translations(__DIR__."/strings.xml");
+
 /* If comments are disabled but user tried to send a comment with 
 some manual POST request, forbid action. */
 if (Settings::DISABLE_COMMENTS) {
-  echo Settings::DISABLE_COMMENTS_MESSAGE;
+  echo $strings->get_string($lang, "comments-diabled");
   exit;
 }
 
@@ -16,7 +20,7 @@ CAPTCHA.*/
 if (!is_null(Settings::RECAPTCHA_PUBLIC_KEY)&&!is_null(Settings::RECAPTCHA_SECRET_KEY)) {
   if (!isset($_POST['g-recaptcha-response'])) 
   {
-    echo "Please enable Javascript and/or check the reCAPTCHA!";
+    echo $strings->get_string($lang, "captcha-error");
     exit;
 }
 else
@@ -26,7 +30,7 @@ else
     $decode = json_decode(file_get_contents($api_url), true);
 
     if ($decode['success'] == false) {
-      echo 'Please check the reCAPTCHA!';
+      echo $strings->get_string($lang, "captcha-error");
       exit;
   }
 }
@@ -34,31 +38,31 @@ else
 
 /* Check the presence of the POST fields. */
 if(!isset($_POST['name']) || !isset($_POST['message']) || !isset($_POST['page'])){
-    echo "System error... please try again later.";
+    echo $strings->get_string($lang, "system-error");
     exit;
 }
 
 /* Check the validity of the input. */
 $name=preg_replace("/\r|\n/", " ", $_POST['name']);
 if(strlen($name)<=0 || strlen($name)>Settings::MAX_USERNAME_LENGTH){
-    echo "Error: name must contain between 1 and ".Settings::MAX_USERNAME_LENGTH." characters.";
+    echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "name-error"));
     exit;
 }
 $message=preg_replace("/(\r|\n)+/", "\\n", $_POST['message']);
 if(strlen($message)<=0 || strlen($message)>Settings::MAX_COMMENT_LENGTH){
-    echo "Error: your comment must contain between 1 and ".Settings::MAX_COMMENT_LENGTH." characters.";
+    echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "comment-error"));
     exit;
 }
 $page=SanitizeFilename($_POST['page']);
 if(strlen($page)<=0){
-    echo "System error... please try again later.";
+    echo $strings->get_string($lang, "system-error");
     exit;
 }
 
 /* Check spam filter. */
 foreach (Settings::SPAM_FILTER as $filter) {
     if(str_contains($message, $filter)){
-        echo "System error... please try again later.";
+        echo $strings->get_string($lang, "system-error");
         exit;
     }
 }
@@ -71,7 +75,8 @@ ob_start();
 if(addComment($page,$name,$message,false)){
     echo "return_ok";
 }else{
-    echo "System error... please try again later.";
+    echo $strings->get_string($lang, "system-error");
+    exit;
 }
 
 /* Flush PHP buffer to answer to the AJAX call without having to wait for the

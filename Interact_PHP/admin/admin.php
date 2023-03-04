@@ -35,7 +35,8 @@ function endOfPage($p='',$isError=false){
   echo $p;
   if($isError)
     echo "<p style=\"text-align:center\"><a href=\"admin.php\" >Go back</a></p>";
-  die('</div></body></html>');
+  echo '</div></body></html>';
+  exit();
 }
 
 ?>
@@ -69,14 +70,14 @@ function endOfPage($p='',$isError=false){
       session_unset();
       session_destroy();
       header("Location: admin.php");
-      die();
+      exit();
     }
     // Delete
     elseif (isset($_SESSION['user']) &&  $_POST['action'] === "delete") {
       if (isset($_POST['filename']) && isset($_POST['id']))
         if (deleteComment(Settings::COMMENTS_ROOT.'/'.$_POST['filename'], $_POST['id'])) {
           header("Location: admin.php");
-          die();
+          exit();
         } else {
           endOfPage('<p class="text-center">Error while deleting this comment.</p>',true);
         }
@@ -87,7 +88,7 @@ function endOfPage($p='',$isError=false){
         $state = ($_POST['isAdmin'] === "true") ? false : true;
         setAdmin(Settings::COMMENTS_ROOT.'/'.$_POST['filename'], $_POST['id'], $state);
         header("Location: admin.php");
-        die();
+        exit();
       }
     }
     // Login

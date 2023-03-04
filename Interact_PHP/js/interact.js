@@ -11,25 +11,26 @@ if(window.addEventListener){
 }
 
 function interactphpSubmit(commentForm, maxNameLen=30, maxCommentLen=2000) {
-	// Show sending comment infobox
-	commentForm.getElementsByClassName('interactphp-alert')[0].classList.add('hidden');
 	// Hide alert box
-	commentForm.getElementsByClassName('interactphp-info')[0].classList.remove('hidden');
+	commentForm.getElementsByClassName('interactphp-alert')[0].classList.add('hidden');
 
 	// Check validity, highlight invalid fields if need be
 	var valid = true;
-	if (commentForm.elements["name"].value.length <=0 || commentForm.elements["name"].value.length > maxNameLen) {
+	if (commentForm.elements["name"].value.length <= 0 || commentForm.elements["name"].value.length > maxNameLen) {
 		valid = false; commentForm.elements["name"].classList.add("has-error");
 	}
 	else commentForm.elements["name"].classList.remove("has-error");
 
-	if (commentForm.elements["message"].value.length <=0 || commentForm.elements["message"].value.length > maxCommentLen) {
+	if (commentForm.elements["message"].value.length <= 0 || commentForm.elements["message"].value.length > maxCommentLen) {
 		valid = false; commentForm.elements["message"].classList.add("has-error");
 	}
 	else commentForm.elements["message"].classList.remove("has-error");
 
 	// AJAX call
 	if (valid) {
+		// Show sending comment infobox
+		commentForm.getElementsByClassName('interactphp-info')[0].classList.remove('hidden');
+
 		var elem   = commentForm.elements;
 		var url    = commentForm.action;    
 		var params = "";
