@@ -11,7 +11,12 @@ if(window.addEventListener){
 }
 
 function interactphpSubmit(commentForm, maxNameLen=30, maxCommentLen=2000) {
+	// Show sending comment infobox
 	commentForm.getElementsByClassName('interactphp-alert')[0].classList.add('hidden');
+	// Hide alert box
+	commentForm.getElementsByClassName('interactphp-info')[0].classList.remove('hidden');
+
+	// Check validity, highlight invalid fields if need be
 	var valid = true;
 	if (commentForm.elements["name"].value.length <=0 || commentForm.elements["name"].value.length > maxNameLen) {
 		valid = false; commentForm.elements["name"].classList.add("has-error");
@@ -23,6 +28,7 @@ function interactphpSubmit(commentForm, maxNameLen=30, maxCommentLen=2000) {
 	}
 	else commentForm.elements["message"].classList.remove("has-error");
 
+	// AJAX call
 	if (valid) {
 		var elem   = commentForm.elements;
 		var url    = commentForm.action;    
@@ -47,7 +53,9 @@ function interactphpSubmit(commentForm, maxNameLen=30, maxCommentLen=2000) {
 		xmlhttp.open("POST",url);
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				if(xmlhttp.responseText.includes('ok')) {
+				commentForm.getElementsByClassName('interactphp-info')[0].classList.add('hidden');
+				// FIXME return 
+				if(xmlhttp.responseText.includes('return_ok')) {
 					// Empty form and reload page
 					commentForm.elements["name"].value = ""
 					commentForm.elements["message"].value = ""

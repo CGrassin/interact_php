@@ -41,6 +41,14 @@
   border-radius: 4px;
   margin-bottom: 5px;
 }
+.comment-box .interactphp-info{
+  color: #31708f;
+  background-color: #d9edf7;
+  border: 1px solid #bce8f1;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
 
 /* Input styling */
 .comment-box .input.has-error{

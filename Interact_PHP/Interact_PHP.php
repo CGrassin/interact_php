@@ -35,6 +35,7 @@ function Interact_PHP($pageTitle=NULL){
     
     <form class="comment-form hidden" method="post" action="<?php echo Settings::LIBRARY_ROOT.'/postComment.php'; ?>" onsubmit="return interactphpSubmit(this, <?php echo Settings::MAX_USERNAME_LENGTH.",".Settings::MAX_COMMENT_LENGTH; ?>)">
       <div class="interactphp-alert hidden" role="alert">Error sending comment...</div>
+      <div class="interactphp-info hidden" role="status">Sending comment...</div>
       
       <label class="sr-only" for="interactphp-message">Comment</label>
       <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="Enter your comment..." onfocus="recaptchaDisplay(this.parentElement.parentElement)"></textarea>

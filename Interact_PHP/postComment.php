@@ -69,7 +69,7 @@ set_time_limit(0);
 ob_start();
 
 if(addComment($page,$name,$message,false)){
-    echo "ok";
+    echo "return_ok";
 }else{
     echo "System error... please try again later.";
 }

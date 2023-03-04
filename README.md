@@ -48,6 +48,7 @@ All of the core parameters of Interact are in the *settings.php* file. There are
 If you want to add your own style, copy an existing CSS file to get started... and commit it on GitHub if you want to contribute to Interact's ongoing development!
 
 ![Interact PHP with various CSS](sample/themes.png)
+
 ## Admin interface
 
 If you set up a value for `ADMIN_PASSWORD`, Interact PHP enables a very simple admin interface that allows to delete and promote comments (to show an "Author" badge).
