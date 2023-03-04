@@ -10,7 +10,7 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 
 ## Features
 
-* No dependency.
+* **No dependency**.
 * **Fast** and convenient for your users with responsive design.
 * Very **simple** setup: no database to configure, just install it and add 2 lines of PHP where you want your comment section to be.
 * Easily **customizable** style and behavior to match the look & feel of your website.
@@ -19,6 +19,7 @@ Similarly to its older brother [HashOver](http://tildehash.com/?page=hashover), 
 * **Secure** by design.
 * Inline **Markdown syntax** support in comments (**bold**, *italics*, ~~strike-through~~ and `inline code`) *(can be disabled)*.
 * **Open-source** (MIT license).
+* **W3C compliant** and follows accessibility rules.
 
 ## Installation and setup
 

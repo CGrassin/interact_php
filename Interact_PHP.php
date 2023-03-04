@@ -9,7 +9,7 @@ class Interact_PHP_Translations{
   }
 
   public function get_string($lang, $id){
-    return $this->strings_xml->xpath('/strings/translation[@lang="'.$lang.'"]/string[@id="'.$id.'"]')[0];
+    return $this->strings_xml->xpath('/strings/translation[@lang="'.$lang.'"]/string[@name="'.$id.'"]')[0];
   }
 }
 

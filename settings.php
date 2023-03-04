@@ -4,7 +4,7 @@
   class Settings
   {
     /* Path of the library, relative to the root of the website. */
-    const LIBRARY_ROOT = '/interact_php'; // default: '/Interact_PHP'
+    const LIBRARY_ROOT = '/interact_php'; // default: '/interact_php'
 
     /* Google's reCAPTCHA anti-spam 'I am not a robot' checkbox. Optionnal
     but recommended. Copy paste your reCAPTCHA v2 keys here. */
@@ -26,7 +26,6 @@
     /* Option to temporaly disable the comments on all of your website.
     You can set a custom HTML warning for yours users. */
     const DISABLE_COMMENTS = false; // default: false
-    const DISABLE_COMMENTS_MESSAGE = "Sorry, comments are temporarily disabled.";
   
     /* If enabled, saves the commenters IP along with their comment in
     the xml files.  */

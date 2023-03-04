@@ -1,19 +1,21 @@
 <?xml version="1.0"?>
 <strings>
-	<translation lang="default">
-		<string id="title">What is on your mind?</string>
-		<string id="no-js">Please enable javascript to be able to comment.</string>
-		<string id="comments-diabled">Sorry, comments are temporarily disabled.</string>
-		<string id="sending-comment">Sending comment...</string>
-		<string id="comment-label">Comment</string>
-		<string id="comment-placeholder">Enter your comment...</string>
-		<string id="name-placeholder">Nickname</string>
-		<string id="submit-btn">Submit</string>
-		<string id="no-comment">No comment yet!</string>
-		<string id="admin-badge">Author</string>
-		<string id="captcha-error">Please check the reCAPTCHA!</string>
-		<string id="system-error">System error... please try again later.</string>
-		<string id="name-error">Your name must contain between 1 and {} characters.</string>
-		<string id="comment-error">Your comment must contain between 1 and {} characters.</string>
-	</translation>
+  <!-- To support another language, copy the <translation lang="your-language"> node and its content. -->
+  <!-- You can use HTML in all strings by replacing "<" and ">" with "&gt;" and "&lt;". -->
+  <translation lang="default">
+    <string name="title">What is on your mind?</string>
+    <string name="no-js">Please enable javascript to be able to comment.</string>
+    <string name="comments-diabled">Sorry, comments are temporarily disabled.</string>
+    <string name="sending-comment">Sending comment...</string>
+    <string name="comment-label">Comment</string>
+    <string name="comment-placeholder">Enter your comment...</string>
+    <string name="name-placeholder">Nickname</string>
+    <string name="submit-btn">Submit</string>
+    <string name="no-comment">No comment yet!</string>
+    <string name="admin-badge">Author</string>
+    <string name="captcha-error">Please check the reCAPTCHA!</string>
+    <string name="system-error">System error... please try again later.</string>
+    <string name="name-error">Your name must contain between 1 and {} characters.</string>
+    <string name="comment-error">Your comment must contain between 1 and {} characters.</string>
+  </translation>
 </strings>
