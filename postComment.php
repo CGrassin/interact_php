@@ -45,12 +45,12 @@ if(!isset($_POST['name']) || !isset($_POST['message']) || !isset($_POST['page'])
 /* Check the validity of the input. */
 $name=preg_replace("/\r|\n/", " ", $_POST['name']);
 if(strlen($name)<=0 || strlen($name)>Settings::MAX_USERNAME_LENGTH){
-    echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "name-error"));
+    echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "name-length-error"));
     exit;
 }
 $message=preg_replace("/(\r|\n)+/", "\\n", $_POST['message']);
 if(strlen($message)<=0 || strlen($message)>Settings::MAX_COMMENT_LENGTH){
-    echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "comment-error"));
+    echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "comment-length-error"));
     exit;
 }
 $page=SanitizeFilename($_POST['page']);
@@ -65,6 +65,12 @@ foreach (Settings::SPAM_FILTER as $filter) {
         echo $strings->get_string($lang, "system-error");
         exit;
     }
+}
+
+// Check if the message contains URLs
+if(Settings::DISALLOW_URLS and (string_contains_URL($message) or string_contains_URL($name))){
+    echo $strings->get_string($lang, "comment-url-error");
+    exit;
 }
 
 /* At this point, the input is valid. Add the comment to the XML file. */

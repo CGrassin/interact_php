@@ -39,6 +39,10 @@
     /* Enable/disable Markdown syntax in comments. */
     const ENABLE_MARKDOWN_SYNTAX = true; // default: true
 
+    /* Enable to disallow URLs in comment. If it is enabled
+    and a URL is detected, the user will see an error message. */
+    const DISALLOW_URLS = false; // default: false
+
     /* Spam filter: if any of the words of the filter are present in a comment,
     it will be discarded.
     Warning: this is an aggressive feature, make sure to only put

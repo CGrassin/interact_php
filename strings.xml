@@ -15,7 +15,8 @@
     <string name="admin-badge">Author</string>
     <string name="captcha-error">Please check the reCAPTCHA!</string>
     <string name="system-error">System error... please try again later.</string>
-    <string name="name-error">Your name must contain between 1 and {} characters.</string>
-    <string name="comment-error">Your comment must contain between 1 and {} characters.</string>
+    <string name="name-length-error">Your name must contain between 1 and {} characters.</string>
+    <string name="comment-length-error">Your comment must contain between 1 and {} characters.</string>
+    <string name="comment-url-error">Sorry, links are not allowed in comments. Please remove it and submit again.</string>
   </translation>
 </strings>

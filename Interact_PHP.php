@@ -127,8 +127,7 @@ function Interact_PHP($pageTitle=NULL, $lang="default"){
   SECURITY 2: htmlspecialchars is used to prevent breaking the XML structure
   with nasty input. */
   function addComment($page,$name,$message) {
-    try
-    {
+    try {
       $filename = NameToCommentFile($page);
       
       if (!file_exists(Settings::COMMENTS_ROOT)) {
@@ -152,33 +151,38 @@ function Interact_PHP($pageTitle=NULL, $lang="default"){
       $xml->asXML($filename);
       return true;
     } catch(Exception $e){}
-      return false;
+    return false;
+  }
+
+  /* Parse Markdown in comments.
+  Inspired by https://gist.github.com/jbroadway/2836900 */
+  function parseMarkdown($string){
+    $rules = array (
+      '/(\*\*|__)(.*?)\1/' => '<b>\2</b>',            // bold
+      '/(\*|_)(.*?)\1/' => '<i>\2</i>',               // emphasis
+      '/\~\~(.*?)\~\~/' => '<del>\1</del>',           // del
+      '/`(.*?)`/' => '<code>\1</code>'                // inline code
+    );
+    foreach ($rules as $regex => $replacement) {
+      $string = preg_replace ($regex, $replacement, $string);
     }
-    
-    /* Parse Markdown in comments.
-    Inspired by https://gist.github.com/jbroadway/2836900 */
-    function parseMarkdown($string){
-      $rules = array (
-        '/(\*\*|__)(.*?)\1/' => '<b>\2</b>',            // bold
-        '/(\*|_)(.*?)\1/' => '<i>\2</i>',               // emphasis
-        '/\~\~(.*?)\~\~/' => '<del>\1</del>',           // del
-        '/`(.*?)`/' => '<code>\1</code>'                // inline code
-      );
-      foreach ($rules as $regex => $replacement) {
-        $string = preg_replace ($regex, $replacement, $string);
-      }
-      return trim ($string);
-    }
-    
-    /* Sanitizes string to be used as a filename. It takes no chances, and
-    works on any filesystem. */
-    function SanitizeFilename($page) {
-      return substr(preg_replace( '/[^a-z0-9]+/', '-', strtolower( $page ) ),0,30);
-    }
-    
-    /* Converts a page title to a safe filepath to save the comments. */
-    function NameToCommentFile($page) {
-      return Settings::COMMENTS_ROOT.'/'.SanitizeFilename($page).'.xml';
-    }
-    ?>
-    
+    return trim ($string);
+  }
+  
+  /* Sanitizes string to be used as a filename. It takes no chances, and
+  works on any filesystem. */
+  function SanitizeFilename($page) {
+    return substr(preg_replace( '/[^a-z0-9]+/', '-', strtolower( $page ) ), 0, 30);
+  }
+  
+  /* Converts a page title to a safe filepath to save the comments. */
+  function NameToCommentFile($page) {
+    return Settings::COMMENTS_ROOT.'/'.SanitizeFilename($page).'.xml';
+  }
+
+  function string_contains_URL($string){
+    // From https://stackoverflow.com/questions/3904482/match-url-pattern-in-php-using-a-regular-expression
+    $regex = "(https|http|ftp)\:\/\/|([a-z0-9A-Z]+\.[a-z0-9A-Z]+\.[a-zA-Z]{2,4})|([a-z0-9A-Z]+\.[a-zA-Z]{2,4})|\?([a-zA-Z0-9]+[\&\=\#a-z]+)";
+    return preg_match("!$regex!i", $string);
+  }
+  ?>
