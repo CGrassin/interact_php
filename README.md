@@ -44,13 +44,21 @@ You can call `\Interact_PHP\Interact_PHP()` multiple times per page if you need 
 
 ## Parameters and customization
 
-All of the core parameters of Interact are in the *settings.php* file. There are a lot of comments to assist you in the configuration process.
+All of the core parameters of Interact are in the *settings.php* file. There are a lot of comments to assist you in the configuration process. Some of them, like enabling reCAPTCHA are highly recommended.
 
-If you want to add your own style, copy an existing CSS file to get started... and commit it on GitHub if you want to contribute to Interact's ongoing development!
+### Look and feel
+
+Several CSS files are included with Interact PHP. If you want to add your own style, copy an existing CSS file to get started... and commit it on GitHub if you want to contribute to Interact's ongoing development!
 
 ![Interact PHP with various CSS](sample/themes.png)
 
-## Admin interface
+### Internationalization
+
+Interact PHP supports full internationalization: all user-visible strings are stored in a "string.xml" file. You can edit this file to match your website or add translations, and call `\Interact_PHP\Interact_PHP("<some-id-such-as-article-title>", "language")` with another parameter "language" that is the desired language to display.
+
+If you need a single display language, you can just customize the "default" language.
+
+### Admin interface
 
 If you set up a value for `ADMIN_PASSWORD`, Interact PHP enables a very simple admin interface that allows to delete and promote comments (to show an "Author" badge).
 
@@ -58,9 +66,9 @@ If you set up a value for `ADMIN_PASSWORD`, Interact PHP enables a very simple a
 
 It is accessible from the url: `https://your_website_url/path/to/interact_php/admin/admin.php`.
 
-## Internationalization
-
-Interact PHP supports full internationalization. All user-visible strings are stored in a "string.xml" file. You can edit those strings to match your website or add translations, and call `\Interact_PHP\Interact_PHP("<some-id-such-as-article-title>","language")` with another parameter "language" that is the desired language to display.
+**Note about security:** Interact PHP only stores a hash of the password, and the absolute worst that can happen if a bad actor were to gain access would be the ability to remove comments, which is negated by doing backups of the comment files (anyway recommended). Regardless, I would highly advise only enabling this admin interface if the two conditions below are met:
+1. Your website uses HTTPS,
+2. You either enabled the reCAPTCHA anti-spam system for Interact PHP and/or you have another way to prevent brute-forcing on your website.
 
 ## Troubleshooting
 
@@ -74,7 +82,7 @@ If the libxml PHP library is not enabled, installing should fix the issue (e.g. 
 
 * **The CSS does not load**
 
-The path of the library relative to the root of your website is probably incorrect. Make sure it matches with the value in *settings.php*. By default, it is */lib/Interact*.
+The path of the library relative to the root of your website is probably incorrect. Make sure it matches with the value in *settings.php*. By default, it is */interact_php*.
 
 * **I am getting reCAPTCHA errors even after checking the box**
 
@@ -83,7 +91,11 @@ You need to make sure that your reCAPTACHA public and secret keys are correct. I
 ## Future features/work in progress
 
 This is the list of future features, by priority:
-* New feature: collapsible comment box if more than the comment box is higher than N pixels
+* New feature: collapsible comment box if more than the comment box is higher than N pixels or N comments
+* New feature: option to forbid links in comments
+* New feature: optional hidden email field to allow the webmaster to contact users
+
+<!-- Scratchpad: reCaptcha v3 support -->
 
 Please submit a [GitHub issue](https://github.com/CGrassin/interact_php/issues) for feature requests or bug reports.
 
