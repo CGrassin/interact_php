@@ -48,17 +48,20 @@ function Interact_PHP($pageTitle=NULL, $lang="default"){
       <div class="interactphp-alert hidden" role="alert"></div>
       <div class="interactphp-info hidden" role="status"><?= $strings->get_string($lang,"sending-comment") ?></div>
       
-      <label class="sr-only" for="interactphp-message"><?= $strings->get_string($lang,"comment-label") ?></label>
+      <!-- Message -->
+      <label class="sr-only" for="message"><?= $strings->get_string($lang,"comment-label") ?></label>
       <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="<?= $strings->get_string($lang,"comment-placeholder") ?>" onfocus="recaptchaDisplay(this.parentElement.parentElement)"></textarea>
-      
+
+      <!-- Nickname -->
       <div class="input-group">
         <div class="interactphp-nickname">
-          <label class="sr-only" for="interactphp-name"><?= $strings->get_string($lang,"name-placeholder") ?></label>
+          <label class="sr-only" for="name"><?= $strings->get_string($lang,"name-placeholder") ?></label>
           <input class="input" type="text" name="name" placeholder="<?= $strings->get_string($lang,"name-placeholder") ?>" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onfocus="recaptchaDisplay(this.parentElement.parentElement.parentElement)">
         </div>
         
+        <!-- Submit button -->
         <div class="interactphp-submit">
-        <button class="input" type="submit"><?= $strings->get_string($lang,"submit-btn") ?></button>
+          <button class="input" type="submit"><?= $strings->get_string($lang,"submit-btn") ?></button>
         </div>
       </div>
       
