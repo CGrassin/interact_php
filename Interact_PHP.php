@@ -52,6 +52,17 @@ function Interact_PHP($pageTitle=NULL, $lang="default"){
       <label class="sr-only" for="message"><?= $strings->get_string($lang,"comment-label") ?></label>
       <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="<?= $strings->get_string($lang,"comment-placeholder") ?>" onfocus="recaptchaDisplay(this.parentElement.parentElement)"></textarea>
 
+      <!-- Email -->
+      <?php 
+        if(Settings::ENABLE_EMAIL_FIELD) {
+          echo '<label class="sr-only" for="email">'.$strings->get_string($lang,"email-label").'</label>';
+          echo '<input class="input" type="email" name="email" placeholder="'.$strings->get_string($lang,"email-placeholder").'" onfocus="recaptchaDisplay(this.parentElement.parentElement)"';
+          if(Settings::EMAIL_FIELD_REQUIRED)
+            echo " required ";
+          echo '>';
+        }
+      ?>
+
       <!-- Nickname -->
       <div class="input-group">
         <div class="interactphp-nickname">
@@ -129,7 +140,7 @@ function Interact_PHP($pageTitle=NULL, $lang="default"){
   whole filesystem is in 777.
   SECURITY 2: htmlspecialchars is used to prevent breaking the XML structure
   with nasty input. */
-  function addComment($page,$name,$message) {
+  function addComment($page,$name,$message,$email=NULL) {
     try {
       $filename = NameToCommentFile($page);
       
@@ -148,9 +159,10 @@ function Interact_PHP($pageTitle=NULL, $lang="default"){
       $comment->addChild('date', time());
       $comment->addChild('name', htmlspecialchars($name));
       $comment->addChild('message', htmlspecialchars($message));
-      if (Settings::ENABLE_SAVE_COMMENTER_IP) {
+      if (!empty($email))
+        $comment->addChild('email', htmlspecialchars($email));
+      if (Settings::ENABLE_SAVE_COMMENTER_IP) 
         $comment->addChild('ip', htmlspecialchars($_SERVER['REMOTE_ADDR']));
-      }
       $xml->asXML($filename);
       return true;
     } catch(Exception $e){}

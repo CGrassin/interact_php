@@ -43,18 +43,41 @@ if(!isset($_POST['name']) || !isset($_POST['message']) || !isset($_POST['page'])
 }
 
 /* Check the validity of the input. */
+// NAME
 $name=preg_replace("/\r|\n/", " ", $_POST['name']);
 if(strlen($name)<=0 || strlen($name)>Settings::MAX_USERNAME_LENGTH){
     echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "name-length-error"));
     exit;
 }
+// MESSAGE
 $message=preg_replace("/(\r|\n)+/", "\\n", $_POST['message']);
 if(strlen($message)<=0 || strlen($message)>Settings::MAX_COMMENT_LENGTH){
     echo str_replace("{}", Settings::MAX_USERNAME_LENGTH, $strings->get_string($lang, "comment-length-error"));
     exit;
 }
+// PAGE
 $page=SanitizeFilename($_POST['page']);
 if(strlen($page)<=0){
+    echo $strings->get_string($lang, "system-error");
+    exit;
+}
+// EMAIL
+$email = NULL;
+if(isset($_POST['email'])){
+    $email = $_POST['email'];
+    // Eror case #1: email empty but required
+    if(Settings::EMAIL_FIELD_REQUIRED and empty($email)){
+        echo $strings->get_string($lang, "email-required-error");
+        exit;
+    }
+    // Eror case #2: email provided but invalid (regardless of required)
+    elseif(!empty($email) and !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo $strings->get_string($lang, "email-validation-error");
+        exit;
+    }
+}
+// Eror case #3: email not set but required - this should not be possible
+elseif(Settings::ENABLE_EMAIL_FIELD and Settings::EMAIL_FIELD_REQUIRED) {
     echo $strings->get_string($lang, "system-error");
     exit;
 }
@@ -78,7 +101,7 @@ ignore_user_abort(true);
 set_time_limit(0);
 ob_start();
 
-if(addComment($page,$name,$message,false)){
+if(addComment($page,$name,$message,$email)){
     echo "return_ok";
 }else{
     echo $strings->get_string($lang, "system-error");

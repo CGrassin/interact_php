@@ -26,7 +26,13 @@
     /* Option to temporaly disable the comments on all of your website.
     You can set a custom HTML warning for yours users. */
     const DISABLE_COMMENTS = false; // default: false
-  
+
+    /* If enabled, adds an email comment field to the comment form. */
+    const ENABLE_EMAIL_FIELD = false; // default: false
+    /* If enabled and the ENABLE_EMAIL_FIELD is true, then the email
+    field is required. Otherwise, it is optional. */
+    const EMAIL_FIELD_REQUIRED = false; // default: false
+
     /* If enabled, saves the commenters IP along with their comment in
     the xml files.  */
     const ENABLE_SAVE_COMMENTER_IP = false; // default: false

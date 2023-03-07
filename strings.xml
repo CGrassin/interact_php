@@ -9,6 +9,7 @@
     <string name="sending-comment">Sending comment...</string>
     <string name="comment-label">Comment</string>
     <string name="comment-placeholder">Enter your comment...</string>
+    <string name="email-placeholder">Email address (optional, not shown)</string>
     <string name="name-placeholder">Nickname</string>
     <string name="submit-btn">Submit</string>
     <string name="no-comment">No comment yet!</string>
@@ -18,5 +19,7 @@
     <string name="name-length-error">Your name must contain between 1 and {} characters.</string>
     <string name="comment-length-error">Your comment must contain between 1 and {} characters.</string>
     <string name="comment-url-error">Sorry, links are not allowed in comments. Please remove it and submit again.</string>
+    <string name="email-validation-error">Please enter a valid email address.</string>
+    <string name="email-required-error">Please enter a valid email address.</string>
   </translation>
 </strings>
