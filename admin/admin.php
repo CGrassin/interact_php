@@ -7,7 +7,7 @@ session_start();
 function deleteComment($filename,$id) {
   if (file_exists($filename)) {
     $xml = simplexml_load_string(file_get_contents($filename));
-    unset($xml->xpath("//comments/comment[@id='" . $id . "']")[0][0]);
+    unset($xml->xpath("/comments/comment[@id='" . $id . "']")[0][0]);
     $xml->asXML($filename);
     return true;
   }
@@ -44,7 +44,7 @@ function endOfPage($p='',$isError=false){
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Interface</title>
+  <title>Interact PHP Admin</title>
   <!-- <link rel="stylesheet" type="text/css" href="github-markdown.css"> -->
   <link rel="stylesheet" type="text/css" href="admin_interface.css">
   <style>
@@ -121,7 +121,6 @@ function endOfPage($p='',$isError=false){
     }
   }
 
-
   // Login form
   if(!isset($_SESSION['user'])) {
     echo '<form class="login" method="post">
@@ -147,7 +146,7 @@ function endOfPage($p='',$isError=false){
     <?php 
       $files = scandir(Settings::COMMENTS_ROOT);
       foreach($files as $file) {
-        if ($file != "." && $file != "..") {
+        if (pathinfo($file)['extension'] === "xml") {
           echo "<li><a href=\"#".$file."\">".$file."</a></li>";
         }
       }

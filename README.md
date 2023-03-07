@@ -91,7 +91,7 @@ You need to make sure that your reCAPTACHA public and secret keys are correct. I
 ## Future features/work in progress
 
 This is the list of future features, by priority:
-* New feature: collapsible comment box if more than the comment box is higher than N pixels or N comments
+* New feature: collapsible comment box if the comment box height is more than N pixels or N comments
 * New feature: optional hidden email field to allow the webmaster to contact users
 
 <!-- Scratchpad: reCaptcha v3 support -->
