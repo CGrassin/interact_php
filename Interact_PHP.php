@@ -49,25 +49,22 @@ function Interact_PHP($pageTitle=NULL, $lang="default"){
       <div class="interactphp-info hidden" role="status"><?= $strings->get_string($lang,"sending-comment") ?></div>
       
       <!-- Message -->
-      <label class="sr-only" for="message"><?= $strings->get_string($lang,"comment-label") ?></label>
-      <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="<?= $strings->get_string($lang,"comment-placeholder") ?>" onfocus="recaptchaDisplay(this.parentElement.parentElement)"></textarea>
+      <textarea class="input" name="message" rows="3" required maxlength="<?php echo Settings::MAX_COMMENT_LENGTH; ?>" placeholder="<?= $strings->get_string($lang,"comment-placeholder") ?>" onfocus="recaptchaDisplay(this.parentElement.parentElement)" aria-label="<?= $strings->get_string($lang,"comment-label") ?>"></textarea>
 
       <!-- Email -->
       <?php 
         if(Settings::ENABLE_EMAIL_FIELD) {
-          echo '<label class="sr-only" for="email">'.$strings->get_string($lang,"email-label").'</label>';
-          echo '<input class="input" type="email" name="email" placeholder="'.$strings->get_string($lang,"email-placeholder").'" onfocus="recaptchaDisplay(this.parentElement.parentElement)"';
+          echo '<input class="input" type="email" name="email" placeholder="'.$strings->get_string($lang,"email-placeholder").'" onfocus="recaptchaDisplay(this.parentElement.parentElement)" ';
           if(Settings::EMAIL_FIELD_REQUIRED)
-            echo " required ";
-          echo '>';
+            echo "required";
+          echo 'aria-label="'.$strings->get_string($lang,"comment-placeholder").' >';
         }
       ?>
 
       <!-- Nickname -->
       <div class="input-group">
         <div class="interactphp-nickname">
-          <label class="sr-only" for="name"><?= $strings->get_string($lang,"name-placeholder") ?></label>
-          <input class="input" type="text" name="name" placeholder="<?= $strings->get_string($lang,"name-placeholder") ?>" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onfocus="recaptchaDisplay(this.parentElement.parentElement.parentElement)">
+          <input class="input" type="text" name="name" placeholder="<?= $strings->get_string($lang,"name-placeholder") ?>" maxlength="<?php echo Settings::MAX_USERNAME_LENGTH; ?>" required onfocus="recaptchaDisplay(this.parentElement.parentElement.parentElement)" aria-label="<?= $strings->get_string($lang,"name-placeholder") ?>">
         </div>
         
         <!-- Submit button -->
