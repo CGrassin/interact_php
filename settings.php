@@ -30,7 +30,8 @@
     /* If enabled, adds an email comment field to the comment form. */
     const ENABLE_EMAIL_FIELD = false; // default: false
     /* If enabled and the ENABLE_EMAIL_FIELD is true, then the email
-    field is required. Otherwise, it is optional. */
+    field is required. Otherwise, it is optional.
+    Change the email-placeholder string accordingly. */
     const EMAIL_FIELD_REQUIRED = false; // default: false
 
     /* If enabled, saves the commenters IP along with their comment in

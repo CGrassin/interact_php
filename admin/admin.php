@@ -169,7 +169,11 @@ function endOfPage($p='',$isError=false){
           echo "<tr>";
           echo '<td>'.htmlspecialchars($comment->{"name"});
           if ($comment->attributes()['admin'] == "true")
-            echo " <strong>ADMIN</strong>";
+            echo "<br><strong>ADMIN</strong>";
+          if (!empty($comment->{"email"}))
+            echo "<br><a href=\"mailto:".htmlspecialchars($comment->{"email"})."\">".htmlspecialchars($comment->{"email"})."</a>";
+          if (!empty($comment->{"ip"}))
+            echo "<br>".htmlspecialchars($comment->{"ip"});
           echo '</td>';
           echo '<td>'.htmlspecialchars($comment->{"message"}).'</td>';
           echo '<td>'.date("F j Y, G:i", intval($comment->{"date"})).'</td>';
